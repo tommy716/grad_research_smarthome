@@ -38,6 +38,8 @@ class ViewController: UIViewController {
     
     var lastClosingEye: Date?
     
+    var eyeYaw: Double?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -116,16 +118,16 @@ class ViewController: UIViewController {
             if let landmarks = faces.first?.landmarks {
                 if let rightEye = relativeCoordinate(eye: landmarks.rightEye?.normalizedPoints ?? [], pupil: landmarks.rightPupil?.normalizedPoints.first), let leftEye = relativeCoordinate(eye: landmarks.leftEye?.normalizedPoints ?? [], pupil: landmarks.leftEye?.normalizedPoints.first) {
                     
-                    if let rX = rightEye.first, let lX = leftEye.first {
+                    if let rX = rightEye.first, let lX = leftEye.first, let yaw = self.eyeYaw {
                         DispatchQueue.main.async {
-                            print((rX + lX) / 2)
-                            if ((rX + lX) / 2) < 0.5 {
+                            let faceAngle = yaw > 0 ? 0.0 : 1.0
+                            if ((((rX + lX) / 2) + faceAngle) / 2) < 0 {
                                 self.powerButton.layer.borderColor = UIColor.red.cgColor
                                 self.tvInputButton.layer.borderColor = UIColor.clear.cgColor
                                 
                                 if self.detectBlinking(bottom: landmarks.leftEye?.normalizedPoints[6], top: landmarks.leftEye?.normalizedPoints[2]) && self.detectBlinking(bottom: landmarks.rightEye?.normalizedPoints[6], top: landmarks.rightEye?.normalizedPoints[2]) {
                                     if self.lastClosingEye != nil {
-                                        if self.lastClosingEye!.timeIntervalSince(Date()) > 3 {
+                                        if Date().timeIntervalSince(self.lastClosingEye!) > 3 {
                                             self.pressButton(buttonId: "power")
                                             self.lastClosingEye = nil
                                         }
@@ -141,7 +143,7 @@ class ViewController: UIViewController {
                                 
                                 if self.detectBlinking(bottom: landmarks.leftEye?.normalizedPoints[6], top: landmarks.leftEye?.normalizedPoints[2]) && self.detectBlinking(bottom: landmarks.rightEye?.normalizedPoints[6], top: landmarks.rightEye?.normalizedPoints[2]) {
                                     if self.lastClosingEye != nil {
-                                        if self.lastClosingEye!.timeIntervalSince(Date()) > 3 {
+                                        if Date().timeIntervalSince(self.lastClosingEye!) > 3 {
                                             self.pressButton(buttonId: "power")
                                             self.lastClosingEye = nil
                                         }
@@ -159,8 +161,6 @@ class ViewController: UIViewController {
                 } else {
                     self.results.append(0)
                 }
-            } else {
-                self.results.append(0)
             }
         }
         
@@ -168,8 +168,24 @@ class ViewController: UIViewController {
             landmarkRequest.revision = 2
         }
         
+        let rectangleRequest = VNDetectFaceRectanglesRequest { [self] (request, error) in
+            guard let faces = request.results as? [VNFaceObservation] else {
+                return
+            }
+            
+            if let face = faces.first {
+                if let yaw = face.yaw?.doubleValue {
+                    self.eyeYaw = rad2deg(yaw)
+                }
+            }
+        }
+        
         let handler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [:])
-        try? handler.perform([landmarkRequest])
+        try? handler.perform([landmarkRequest, rectangleRequest])
+    }
+    
+    func rad2deg(_ number: Double) -> Double {
+        return number * 180 / .pi
     }
     
     func relativeCoordinate(eye: [CGPoint], pupil: CGPoint?) -> [Double]? {
@@ -195,7 +211,7 @@ class ViewController: UIViewController {
         guard let bottom = bottom, let top = top else {
             return false
         }
-        return (bottom.y - top.y).magnitude < 0.025 ? true : false
+        return (bottom.y - top.y).magnitude < 0.03 ? true : false
     }
 }
 
