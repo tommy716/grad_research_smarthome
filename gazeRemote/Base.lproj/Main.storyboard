@@ -29,7 +29,7 @@
                                             <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="50"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <segue destination="rRS-k2-zlK" kind="show" id="pCR-cm-9yr"/>
+                                            <segue destination="rRS-k2-zlK" kind="show" identifier="tv" id="pCR-cm-9yr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MNY-WA-pFC">
@@ -37,9 +37,12 @@
                                         <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Light">
+                                        <buttonConfiguration key="configuration" style="plain" title="Apple TV">
                                             <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="50"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="QQM-cx-uNt" kind="show" identifier="apple" id="f7x-u4-s4L"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -128,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zuH-rM-tPl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1429" y="84"/>
+            <point key="canvasLocation" x="1429" y="-292"/>
         </scene>
         <!--Results View Controller-->
         <scene sceneID="IEm-VG-DQh">
@@ -197,6 +200,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kKd-aN-rUt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="19.765739385065885" y="83.7890625"/>
+        </scene>
+        <!--Apple TV-->
+        <scene sceneID="GhR-hb-Yab">
+            <objects>
+                <viewController id="QQM-cx-uNt" customClass="ViewController" customModule="gazeRemote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UnM-O6-BYN">
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="sdF-dc-sLS">
+                                <rect key="frame" x="0.0" y="74" width="1366" height="930"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2hx-f3-jaN">
+                                        <rect key="frame" x="0.0" y="0.0" width="683" height="930"/>
+                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Menu">
+                                            <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="50"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4zi-tS-7hP">
+                                        <rect key="frame" x="683" y="0.0" width="683" height="930"/>
+                                        <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Play &amp; Pause">
+                                            <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="50"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Uh5-Dj-H3q"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sdF-dc-sLS" firstAttribute="leading" secondItem="Uh5-Dj-H3q" secondAttribute="leading" id="Ewc-W4-I06"/>
+                            <constraint firstItem="Uh5-Dj-H3q" firstAttribute="bottom" secondItem="sdF-dc-sLS" secondAttribute="bottom" id="YGS-Dq-jgK"/>
+                            <constraint firstItem="Uh5-Dj-H3q" firstAttribute="trailing" secondItem="sdF-dc-sLS" secondAttribute="trailing" id="dZN-5D-w5x"/>
+                            <constraint firstItem="sdF-dc-sLS" firstAttribute="top" secondItem="Uh5-Dj-H3q" secondAttribute="top" id="mrA-yL-t7U"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Apple TV" id="35i-ZN-kLY">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="blR-mp-xFp"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="powerButton" destination="2hx-f3-jaN" id="zVy-ys-Eah"/>
+                        <outlet property="tvInputButton" destination="4zi-tS-7hP" id="Lfd-j8-SIN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8X6-co-SdY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1429" y="494"/>
         </scene>
     </scenes>
     <resources>

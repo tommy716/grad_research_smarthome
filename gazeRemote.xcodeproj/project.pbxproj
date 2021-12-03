@@ -17,6 +17,7 @@
 		65B85A7127194B41007E36BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B85A6F27194B41007E36BA /* Main.storyboard */; };
 		65B85A7327194B43007E36BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65B85A7227194B43007E36BA /* Assets.xcassets */; };
 		65B85A7627194B43007E36BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65B85A7427194B43007E36BA /* LaunchScreen.storyboard */; };
+		65E58BFD2759ECE2004C65ED /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E58BFC2759ECE2004C65ED /* MenuViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		65B85A7527194B43007E36BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65B85A7727194B43007E36BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65B85A7D27194B4E007E36BA /* gazeRemote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gazeRemote.entitlements; sourceTree = "<group>"; };
+		65E58BFC2759ECE2004C65ED /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				65234B6F274F5EB200840B1C /* NatureRemo.swift */,
 				65234B71274F5F2800840B1C /* Token.plist */,
 				65B375A927548EB60094C19D /* ResultsViewController.swift */,
+				65E58BFC2759ECE2004C65ED /* MenuViewController.swift */,
 			);
 			path = gazeRemote;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65B85A6E27194B41007E36BA /* ViewController.swift in Sources */,
+				65E58BFD2759ECE2004C65ED /* MenuViewController.swift in Sources */,
 				65234B70274F5EB200840B1C /* NatureRemo.swift in Sources */,
 				65B85A6A27194B41007E36BA /* AppDelegate.swift in Sources */,
 				65B375AA27548EB60094C19D /* ResultsViewController.swift in Sources */,

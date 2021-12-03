@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     
     let baseUrl = "https://api.nature.global/1/"
     var token: String = ""
-    let buttonIds: [String:String] = [
+    let tvButtonIds: [String:String] = [
         "power": "d9558865-591e-43b1-bf88-72a908f8cb98",
         "input": "2c2bf0ff-f5dc-476e-85c7-0e72f9699f2c",
         "top": "db3ff1f5-b2c9-4798-bfe2-2f5d5494131a",
@@ -36,9 +36,16 @@ class ViewController: UIViewController {
         "plus": "3dd34695-e0bd-4069-98cf-c33b0fc27ee3",
     ]
     
+    let appleTvButtonIds: [String:String] = [
+        "menu": "531afe4f-6b2e-46ea-a814-1f1deb8ebcc6",
+        "playPause": "f65a8628-eb53-42b1-a11a-839cfb709f14",
+    ]
+    
     var lastClosingEye: Date?
     
     var eyeYaw: Double?
+    
+    var device: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +135,11 @@ class ViewController: UIViewController {
                                 if self.detectBlinking(bottom: landmarks.leftEye?.normalizedPoints[6], top: landmarks.leftEye?.normalizedPoints[2]) && self.detectBlinking(bottom: landmarks.rightEye?.normalizedPoints[6], top: landmarks.rightEye?.normalizedPoints[2]) {
                                     if self.lastClosingEye != nil {
                                         if Date().timeIntervalSince(self.lastClosingEye!) > 3 {
-                                            self.pressButton(buttonId: "power")
+                                            if self.device == "tv" {
+                                                self.pressButton(id: tvButtonIds["power"] ?? "")
+                                            } else if self.device == "apple" {
+                                                self.pressButton(id: appleTvButtonIds["menu"] ?? "")
+                                            }
                                             self.lastClosingEye = nil
                                         }
                                     } else {
@@ -144,7 +155,11 @@ class ViewController: UIViewController {
                                 if self.detectBlinking(bottom: landmarks.leftEye?.normalizedPoints[6], top: landmarks.leftEye?.normalizedPoints[2]) && self.detectBlinking(bottom: landmarks.rightEye?.normalizedPoints[6], top: landmarks.rightEye?.normalizedPoints[2]) {
                                     if self.lastClosingEye != nil {
                                         if Date().timeIntervalSince(self.lastClosingEye!) > 3 {
-                                            self.pressButton(buttonId: "power")
+                                            if self.device == "tv" {
+                                                self.pressButton(id: tvButtonIds["input"] ?? "")
+                                            } else if self.device == "apple" {
+                                                self.pressButton(id: appleTvButtonIds["playPause"] ?? "")
+                                            }
                                             self.lastClosingEye = nil
                                         }
                                     } else {
@@ -225,10 +240,8 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 }
 
 extension ViewController {
-    func pressButton(buttonId: String) {
-        print("Debug: \(buttonId)")
-        guard let targetButton = buttonIds[buttonId] else { return }
-        let requestUrl  = baseUrl + "signals/" + targetButton + "/send"
+    func pressButton(id: String) {
+        let requestUrl  = baseUrl + "signals/" + id + "/send"
         let Auth_header: HTTPHeaders = [
             "Authorization" : "Bearer " + token
         ]
